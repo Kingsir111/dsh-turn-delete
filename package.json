@@ -30,7 +30,9 @@
     "README.md",
     "README.en.md",
     "CHANGELOG.md",
-    "LICENSE"
+    "LICENSE",
+    "assets",
+    "screenshots.json"
   ],
   "engines": {
     "node": ">=22.19"

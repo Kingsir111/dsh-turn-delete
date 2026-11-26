@@ -112,3 +112,73 @@ dsh plugin --profile desktop add github:Kingsir111/dsh-turn-delete
 - `.github/ISSUE_TEMPLATE/bug.yml`：要求贴内核版本 `dsh --version`、错误码、是否 DeepSeek 适配器。
 - `.github/workflows/check.yml`：只跑 `node test/client-register.mjs`（它不依赖内核，能作为最小 CI 门禁）。
 - `docs/截图.gif`：垃圾桶 → 确认 → 该轮消失，10 秒内。
+
+## 七、提交到 awesome-dsh-plugin 列表 / dsh 插件市场
+
+列表数据在 `awesome-dsh-plugin/awesome-dsh-plugin` 仓库的 `data/plugins/`，一个插件一个 YAML。**不要手工改 README**（由脚本生成）。
+
+PR 里只加这一个文件：`data/plugins/Kingsir111__dsh-turn-delete.yml`
+
+```yaml
+url: https://github.com/Kingsir111/dsh-turn-delete
+name: Kingsir111/dsh-turn-delete
+category: session
+icon: https://raw.githubusercontent.com/Kingsir111/dsh-turn-delete/main/assets/icon-512.png
+description:
+  en: Delete one finished turn from a session so it stops entering later model context, while the append-only session log stays intact.
+  zh: 从会话里删除已结束的一轮对话，使其不再进入后续模型上下文，而 append-only 会话日志保持完整。
+```
+
+对照它们硬性要求逐条自查：
+
+| 要求 | 本仓库情况 |
+|---|---|
+| 文件名 = `url` 推出的 slug | `Kingsir111__dsh-turn-delete.yml` ✓ |
+| `url` 是 `https://github.com/owner/repo` | ✓ |
+| `category` 在允许集合内 | `session` ✓ |
+| `description.en` 单行、以句号结尾、无营销词、已含 `": "` 则要加引号 | 本次无冒号，无需引号 ✓ |
+| `package.json` 声明 `dsh.bundle` | ✓（`./cordis.patch.yml`） |
+| 仓库根有 `cordis.patch.yml` | ✓ |
+| 仓库有真实代码，非占位/纯 README | ✓（`lib/` 三个模块 + 10 个测试 + 3 个工具） |
+| 仓库创建满 **1 天** | ⚠️ 2026-11-26 创建，需 **2026-11-27 之后**再提 PR（CI 自动查） |
+| 仓库带 `dsh-plugin` topic | ✓ |
+| 一个 PR 最多 3 条 | 本次 1 条 ✓ |
+| `icon` 必须是 GitHub 托管的**位图** | `assets/icon-512.png`（512×512，PNG）✓，SVG 会被拒 |
+| 截图在**自己仓库**的 `screenshots.json` 声明 | ✓ 根目录 `screenshots.json` → `assets/screenshot-{1,2}.png` |
+| 可选 `tarball` | 不需要：本插件从源码即可安装，无构建脚本 |
+
+位图与截图由 `tools/make-store-assets.py` 生成（图标是 `icon.svg` 的栅格版，截图取自 `docs/demo.gif` 的首尾帧）。
+
+### PR 标题与正文
+
+标题：
+
+```
+Add Kingsir111/dsh-turn-delete (session)
+```
+
+正文：
+
+```markdown
+Adds one entry for a session plugin.
+
+- **What it does:** deletes one finished turn from a session so it stops entering
+  later model context (the model-visible surface), without rewriting the
+  append-only session log. Session id, title, workspace and later turns are
+  preserved; the original events stay auditable.
+- **Category:** `session` — the plugin changes which turns of a session remain in
+  the model context. It ships a Host half (three HTTP routes) and a browser half
+  (trash action on finished turns, plus a marker on deleted ones).
+- **Manifest:** `package.json` declares `dsh.bundle.patch` (`cordis.patch.yml`)
+  and `dsh.client`; kernel packages are `peerDependencies`, declared as
+  `^0.1.5-rc.2 || ^0.2.0-rc.1` (explicit prerelease branch).
+- **Tested:** replayed a real 1907-event session log against kernel
+  `0.1.7-rc.2`, `0.2.0-rc.1`, `0.2.1-rc.5` and `0.2.2-rc.3`; identical spans and
+  identical derived-history deltas, including a regression assertion that a
+  deletion never produces a log the kernel refuses to load.
+- Details and test records: `docs/DESIGN.md`, `docs/TEST-REPORT.md`.
+```
+
+### 另一条渠道：应用内插件市场
+
+DSH 桌面版「设置 → 插件市场（dsh-market）」右上角有 **申请收录插件 ↗**，那是 dsh-market 自己的收录入口，与 awesome-dsh-plugin 列表互不替代，可以两边都提。
