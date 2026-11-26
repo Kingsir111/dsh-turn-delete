@@ -1,0 +1,22 @@
+{
+  "meta": {
+    "title": "轮次删除",
+    "description": "从会话里删掉一整轮对话：该轮的提问、回答与工具记录不再进入后续模型上下文，Session 本身与之后的轮次保留。",
+    "detail": "docs/DETAIL.md"
+  },
+  "action.delete": "从上下文删除这一轮",
+  "action.busy": "任务运行中，结束后才能删除",
+  "confirm.title": "删除这一轮？",
+  "confirm.body": "本轮提问、回答与工具记录会从后续模型上下文中移除，Session 本身与之后的轮次保留。",
+  "confirm.ok": "删除",
+  "confirm.cancel": "取消",
+  "confirm.working": "删除中…",
+  "mark.deleted": "此轮已从上下文删除",
+  "error.busy": "任务正在运行，请结束后再删。",
+  "error.compacted": "这一轮已与其他历史合并压缩，无法单独删除。",
+  "error.protected": "这一轮包含当前生效的系统提示，删掉会让后续请求丢失系统提示，已拒绝。",
+  "error.missing": "这一轮已变化或不存在，无法删除。",
+  "error.failed": "删除失败：",
+  "error.network": "无法连接到 Host，删除未生效。",
+  "mark.pending": "已登记：下一次提问起生效"
+}

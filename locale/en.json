@@ -1,0 +1,22 @@
+{
+  "meta": {
+    "title": "Turn delete",
+    "description": "Delete one finished turn from a session: its prompt, response and tool records stop entering later model context, while the Session and its later turns stay.",
+    "detail": "docs/DETAIL.md"
+  },
+  "action.delete": "Delete this turn from context",
+  "action.busy": "Wait for the task to finish before deleting",
+  "confirm.title": "Delete this turn?",
+  "confirm.body": "The prompt, response and tool records of this turn leave the model context. The Session and its later turns stay.",
+  "confirm.ok": "Delete",
+  "confirm.cancel": "Cancel",
+  "confirm.working": "Deleting…",
+  "mark.deleted": "This turn is out of context",
+  "error.busy": "The task is running. Delete after it finishes.",
+  "error.compacted": "This turn is already folded into other history and cannot be removed alone.",
+  "error.protected": "This turn carries the active system prompt; deleting it would strip the prompt from later requests.",
+  "error.missing": "This turn changed or no longer exists.",
+  "error.failed": "Deletion failed: ",
+  "error.network": "Cannot reach the Host; nothing was deleted.",
+  "mark.pending": "Queued: applies from your next message"
+}

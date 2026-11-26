@@ -1,0 +1,21 @@
+# 依赖
+node_modules/
+.pnpm-store/
+
+# 测试数据：解包后的真实会话日志，含私人对话内容，禁止提交
+.testdata/
+*.jsonl
+*.jsonl.zstd
+*.zstd
+
+# 备份与临时文件
+*.bak
+*.bak-*
+*.tmp
+*.log
+
+# 系统/编辑器
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/

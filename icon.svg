@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64" role="img" aria-label="Delete one turn">
+  <rect x="4" y="4" width="56" height="56" rx="14" fill="#eef2ff"/>
+  <rect x="14" y="18" width="36" height="7" rx="3.5" fill="#c7d2fe"/>
+  <rect x="14" y="30" width="24" height="6" rx="3" fill="#a5b4fc"/>
+  <rect x="14" y="41" width="16" height="6" rx="3" fill="#a5b4fc"/>
+  <g stroke="#3b3fd8" stroke-width="2.6" stroke-linecap="round" fill="none">
+    <path d="M40 36.5h16"/>
+    <path d="M44.5 40.5l.7 11.2a2.4 2.4 0 0 0 2.4 2.25h5.8a2.4 2.4 0 0 0 2.4-2.25l.7-11.2"/>
+    <path d="M45.2 36.5l.24 2.4h9.12l.24-2.4"/>
+  </g>
+</svg>
