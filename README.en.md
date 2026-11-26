@@ -57,8 +57,28 @@ Verified by replaying one real 1907-event / 19-turn log against each installed k
 ## Limits
 
 - Finished top-level turns only; subagent sessions show no button.
-- The visual hiding of a deleted turn relies on the `data-turn-tail` / `data-chat-flow-kind` DOM contract. The context deletion itself does not depend on it.
+- Visual hiding of a deleted turn is anchored on the plugin's own action button, with framework attributes and text fragments as fallbacks. The kernel exposes no per-turn visibility hook, so the context deletion itself does not depend on it.
 - Facts repeated in other turns still exist there — correctly.
+
+## Known issues
+
+### A deleted turn comes back after archiving and unarchiving the session
+
+Reproduce: delete a few turns, archive the session, unarchive it — those turns appear in the transcript again. Refreshing the page does the same.
+
+This is visual only. The model still receives history without those turns; the deletion itself holds.
+
+**Why the transcript shows what the model no longer sees.** Two different projections of one append-only log:
+
+| Layer | Source | Result |
+|---|---|---|
+| Model context | The surface projection of the event log (`deriveMessages()`), which applies `surfaceOp` replacements | replaced spans never reach the request → **removed** |
+| Transcript | The client's own chat node list | every `append` event becomes a node; there is no "drop these spans" path → **still shown** |
+
+In the kernel's `dsh-client-ui-chat`, a `user/message` renders when `isAppendSurfaceEvent(event) && !isCompactionCheckpoint(event)`, and `isCompactionCheckpoint` matches exactly a `user/message` carrying a non-append `surfaceOp` — the tombstone shape this plugin writes. The tombstone is therefore drawn as a compaction checkpoint, while the original append events were never removed. That bundle contains no `endSeq`, so it does not consume replacement spans at all.
+
+Archiving only rebuilds the view from stored events, which is why the result matches a page reload. Nothing about archiving rewrites the log.
+
 
 ## Docs
 
