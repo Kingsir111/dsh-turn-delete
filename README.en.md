@@ -16,6 +16,7 @@ The case it exists for: you were talking about A, accidentally asked something a
 
 ## Features
 
+- **Many turns at once**: the trash icon opens selection mode; click any floor to pick it (blue ring plus shadow), click again to drop it, then delete everything selected from one fixed bottom bar.
 - **Real removal, not a mask**: the turn leaves `session.deriveMessages()`, which is the only source of every request.
 - **Immediate** on DeepSeek providers; other adapters fall back to "applies from your next message" automatically.
 - **Log untouched**: deletion appends one surface-replacement event; the original prompt, answers and tool records stay auditable and replayable.
@@ -37,7 +38,14 @@ Restart DSH (or the desktop app) after installing, or enable `dsh-turn-delete` i
 
 ## Use
 
-Hover the action row of a finished turn's last assistant reply → trash icon → Delete. The row hides immediately and is marked as removed from context; refresh and restart keep it that way.
+1. Hover the action row of any finished turn's last assistant reply and click the trash icon: selection mode opens.
+2. Click any floor in the transcript to select it (blue ring plus shadow); click it again to clear it. Pick as many turns as you want.
+3. Click **Delete** in the fixed bottom bar, review the confirmation dialog, then confirm.
+4. Those turns leave the model context and their floors are hidden.
+
+`Esc` or **Exit** leaves selection mode. Turns that cannot be removed (open, compacted, carrying the system prompt) cannot be picked and are refused by the API with a code. The button is disabled while the task runs; deletion is idempotent.
+
+A removed floor can reappear after archiving and unarchiving a session. That is visual only — the context stays clean. See [Known issues](#a-deleted-turn-comes-back-after-archiving-and-unarchiving-the-session).
 
 | Adapter | Timing | Carrier |
 |---|---|---|
