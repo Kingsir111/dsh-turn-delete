@@ -10,6 +10,10 @@
 - 运行环境：Web profile 或基于 Web 的桌面套壳，Node 22.19+
 - 许可：MIT
 
+![删除一轮对话的演示](docs/demo.gif)
+
+> 上图按真实交互重绘（垃圾桶 → 确认 → 该轮从上下文消失），非屏幕录制；重绘脚本见 `tools/make-demo-gif.py`。
+
 ---
 
 ## 特性

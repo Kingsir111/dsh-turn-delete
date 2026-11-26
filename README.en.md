@@ -10,6 +10,10 @@ The case it exists for: you were talking about A, accidentally asked something a
 - Runtime: Web profile or a Web-based desktop shell, Node 22.19+
 - License: MIT
 
+![Deleting one turn](docs/demo.gif)
+
+> Redrawn from the real interaction (trash → confirm → the turn leaves the context); not a screen recording. Generator: `tools/make-demo-gif.py`.
+
 ## Features
 
 - **Real removal, not a mask**: the turn leaves `session.deriveMessages()`, which is the only source of every request.
