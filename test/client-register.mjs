@@ -1,4 +1,4 @@
-// Register the browser half against stub Client services.
+﻿// Register the browser half against stub Client services.
 // Verifies the module-loader contract, the slot registrations (ids, order,
 // locale, injected face) and that both components are real functions.
 //
@@ -56,18 +56,17 @@ exportsObject.apply(ctx)
 assert.equal(dictionaries.length, 1, 'registers one locale namespace')
 assert.equal(dictionaries[0].ns, 'turn-delete')
 assert.deepEqual(Object.keys(dictionaries[0].dicts).sort(), ['en', 'zh'])
-assert.equal(registrations.length, 2, 'registers two slots')
+assert.equal(registrations.length, 3, 'registers three slots')
 
-const [actions, marker] = registrations
+const [actions, marker, panel] = registrations
+assert.equal(panel.options.name, 'conversation.input.overlay')
+assert.equal(panel.options.id, 'turn-delete-panel')
 assert.equal(actions.options.name, 'conversation.chat.assistant-actions')
 assert.equal(actions.options.id, 'turn-delete', 'list slot carries a stable id')
 assert.equal(actions.options.order, 90)
 assert.equal(actions.options.locale, 'turn-delete')
 assert.equal(typeof actions.options.inject, 'function', 'actions slot injects a face')
-const face = actions.options.inject('session-abc')
-assert.deepEqual(Object.keys(face).sort(), ['deleteTurn', 'sessionId'])
-assert.equal(face.sessionId, 'session-abc', 'the action face carries the session id')
-assert.equal(typeof face.deleteTurn, 'function')
+assert.deepEqual(actions.options.inject('session-abc'), { sessionId: 'session-abc' })
 assert.equal(typeof actions.component, 'function')
 
 assert.equal(marker.options.name, 'conversation.chat.turnTail')
@@ -78,15 +77,20 @@ assert.equal(typeof marker.component, 'function')
 // The action component must render without a live framework hook face.
 const element = actions.component({ messageId: 'm1', sessionId: 's1', t: key => key, deleteTurn: async () => ({ ok: true }) })
 assert.equal(element.type, 'button', 'idle state renders the trash button')
-assert.equal(element.props['aria-label'], 'action.delete')
+assert.equal(element.props['aria-label'], 'action.enter')
 const glyphElement = element.children[0]
 assert.equal(typeof glyphElement.type, 'function', 'glyph is a local component')
 assert.equal(glyphElement.type({}).type, 'svg', 'inline glyph needs no icon export')
 
 const markerElement = marker.component({ turn: 3, sessionId: 's1', t: key => key })
-assert.equal(markerElement, null, 'no deleted state renders nothing')
+assert.equal(markerElement, null, 'outside selection mode a healthy turn renders nothing')
+assert.equal(typeof panel.component, 'function', 'panel component is a function')
 
 console.log('client registration OK')
 console.log('  slots:', registrations.map(entry => `${entry.options.name}#${entry.options.id}`).join(' | '))
 console.log('  locales:', Object.keys(dictionaries[0].dicts).join(','))
 console.log('  idle button:', element.props['aria-label'])
+console.log('  slots:', registrations.map(entry => entry.options.name + '#' + entry.options.id).join(' | '))
+
+
+

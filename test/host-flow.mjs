@@ -1,4 +1,4 @@
-// End-to-end Host test for the deferred design, over a real session log.
+﻿// End-to-end Host test for the deferred design, over a real session log.
 //
 // Verifies the property the first design broke: after a deletion, the whole log
 // still passes the v4 *load* admission the app uses on the next start.
@@ -55,7 +55,7 @@ const { ctx, agent, listeners, routes } = makeCtx(session)
 
 // ---- mount ------------------------------------------------------------------
 host.apply(ctx)
-assert.deepEqual(routes.map(route => route.path).sort(), [host.DELETE_ROUTE, host.DELETED_ROUTE].sort(), 'both routes mounted')
+assert.deepEqual(routes.map(route => route.path).sort(), [host.DELETE_ROUTE, host.DELETED_ROUTE, host.TURNS_ROUTE, host.IMPORT_ROUTE].sort(), 'all routes mounted')
 assert.equal(listeners.length, 1, 'one session/event watcher')
 assert.equal(listeners[0].name, 'session/event')
 console.log(`1 mount            OK  routes=${routes.length} watcher=${listeners[0].name}`)
@@ -72,8 +72,8 @@ assert.equal(admission(session), 'admitted', 'baseline log is loadable')
 // ---- request the deletion ---------------------------------------------------
 const receipt = await host.requestDeletion(ctx, agent, messageId)
 assert.equal(receipt.turn, targetTurn)
-assert.equal(receipt.deferred ?? receipt.applied, false, 'an adapter without the empty-drop rule defers')
-assert.equal(typeof receipt.requestSeq, 'number', 'the deferred request is recorded')
+assert.equal(receipt.status, 'deferred', 'an adapter without the empty-drop rule defers')
+assert.ok(core.pendingRequests(session).length >= 1, 'the deferred request is recorded')
 assert.equal(session.deriveMessages().length, before, 'nothing is removed before a step opens')
 assert.deepEqual(core.deletedTurns(session), [], 'not applied yet')
 assert.deepEqual(core.pendingRequests(session).map(item => item.turn), [targetTurn], 'request is pending')
@@ -116,9 +116,9 @@ assert.equal(admission(session), 'admitted')
 console.log('5 idempotent        OK  no second tombstone')
 
 // ---- refusal is immediate ----------------------------------------------------
-let code
-try { await host.requestDeletion(ctx, agent, 'no-such-message') } catch (error) { code = error.code }
-assert.equal(code, 'TARGET_NOT_FOUND')
+const refused = await host.requestDeletion(ctx, agent, 'no-such-message')
+assert.equal(refused.status, 'refused')
+assert.equal(refused.code, 'TARGET_NOT_FOUND')
 console.log('6 refusal           OK  TARGET_NOT_FOUND before anything is recorded')
 
 // ---- routing through the HTTP handler ---------------------------------------
@@ -144,12 +144,13 @@ console.log('\n--- immediate mode (DeepSeek provider drops empty user messages) 
   ctx2.ctx.agents.get = id => (id === direct.id ? agent2 : undefined)
   const beforeDirect = direct.deriveMessages().length
   const receipt2 = await host.requestDeletion(ctx2.ctx, agent2, messageId)
-  assert.equal(receipt2.applied, true, 'immediate providers delete in the same call')
+  assert.equal(receipt2.status, 'applied', 'immediate providers delete in the same call')
   assert.equal(receipt2.immediate, true)
+  const carrierSeq = direct.snapshotEvents().filter(event => event.surfaceOp !== undefined && event.surfaceOp !== 'append').at(-1).seq
   const afterDirect = direct.deriveMessages().length
   assert.ok(afterDirect < beforeDirect, `turn gone immediately (${beforeDirect} -> ${afterDirect})`)
   assert.deepEqual(core.deletedTurns(direct), [targetTurn])
-  const carrier = direct.eventAt(receipt2.seq)
+  const carrier = direct.eventAt(carrierSeq)
   assert.equal(carrier.type, 'user/message', 'immediate carrier is a user/message replacement')
   assert.equal(carrier.data.content.length, 0, 'carrier content is empty')
   assert.equal(carrier.data.source.kind, 'user')
@@ -161,3 +162,7 @@ console.log('\n--- immediate mode (DeepSeek provider drops empty user messages) 
 }
 
 console.log('\nall host flow checks passed')
+
+
+
+
