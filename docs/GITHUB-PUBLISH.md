@@ -53,13 +53,13 @@ dsh-turn-delete/
 `package.json` 里三处 `YOUR_*`：
 
 ```json
-"author": "YOUR_NAME <you@example.com>",
-"repository": { "url": "git+https://github.com/YOUR_GITHUB_USER/dsh-turn-delete.git" },
-"bugs": { "url": "https://github.com/YOUR_GITHUB_USER/dsh-turn-delete/issues" },
-"homepage": "https://github.com/YOUR_GITHUB_USER/dsh-turn-delete#readme"
+"author": "Kingsir111 <Kingsir111@users.noreply.github.com>",
+"repository": { "url": "git+https://github.com/Kingsir111/dsh-turn-delete.git" },
+"bugs": { "url": "https://github.com/Kingsir111/dsh-turn-delete/issues" },
+"homepage": "https://github.com/Kingsir111/dsh-turn-delete#readme"
 ```
 
-README / README.en 里的 `YOUR_GITHUB_USER` 两处也要替换。
+README / README.en 里的 `Kingsir111` 两处也要替换。
 
 ## 四、仓库 About 文案
 
@@ -99,7 +99,7 @@ deepseek-harness  dsh  dsh-plugin  ai-agent  context-management  conversation  s
 
 ## 安装
 ```sh
-dsh plugin --profile desktop add github:YOUR_GITHUB_USER/dsh-turn-delete
+dsh plugin --profile desktop add github:Kingsir111/dsh-turn-delete
 ```
 
 ## 注意

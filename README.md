@@ -35,7 +35,7 @@ dsh plugin --profile desktop add -w link:/绝对路径/dsh-turn-delete
 **2. 从 GitHub 安装**
 
 ```sh
-dsh plugin --profile desktop add github:YOUR_GITHUB_USER/dsh-turn-delete
+dsh plugin --profile desktop add github:Kingsir111/dsh-turn-delete
 ```
 
 **3. 桌面版手动放置**

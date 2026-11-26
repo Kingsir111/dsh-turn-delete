@@ -4,15 +4,15 @@
   "type": "module",
   "description": "Delete one finished turn from a DeepSeek Harness session without deleting the session: the turn leaves the model context, the log stays intact",
   "license": "MIT",
-  "author": "YOUR_NAME <you@example.com>",
+  "author": "Kingsir111 <Kingsir111@users.noreply.github.com>",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/YOUR_GITHUB_USER/dsh-turn-delete.git"
+    "url": "git+https://github.com/Kingsir111/dsh-turn-delete.git"
   },
   "bugs": {
-    "url": "https://github.com/YOUR_GITHUB_USER/dsh-turn-delete/issues"
+    "url": "https://github.com/Kingsir111/dsh-turn-delete/issues"
   },
-  "homepage": "https://github.com/YOUR_GITHUB_USER/dsh-turn-delete#readme",
+  "homepage": "https://github.com/Kingsir111/dsh-turn-delete#readme",
   "main": "./lib/index.js",
   "exports": {
     ".": "./lib/index.js",

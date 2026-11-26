@@ -26,7 +26,7 @@ The case it exists for: you were talking about A, accidentally asked something a
 dsh plugin --profile desktop add -w link:/abs/path/dsh-turn-delete
 
 # from GitHub
-dsh plugin --profile desktop add github:YOUR_GITHUB_USER/dsh-turn-delete
+dsh plugin --profile desktop add github:Kingsir111/dsh-turn-delete
 ```
 
 Restart DSH (or the desktop app) after installing, or enable `dsh-turn-delete` in the plugin panel.
