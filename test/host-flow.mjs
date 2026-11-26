@@ -55,7 +55,7 @@ const { ctx, agent, listeners, routes } = makeCtx(session)
 
 // ---- mount ------------------------------------------------------------------
 host.apply(ctx)
-assert.deepEqual(routes.map(route => route.path).sort(), [host.DELETE_ROUTE, host.DELETED_ROUTE, host.TURNS_ROUTE, host.IMPORT_ROUTE].sort(), 'all routes mounted')
+assert.deepEqual(routes.map(route => route.path).sort(), [host.DELETE_ROUTE, host.DELETED_ROUTE, host.TURNS_ROUTE, host.HIDDEN_ROUTE, host.IMPORT_ROUTE].sort(), 'all routes mounted')
 assert.equal(listeners.length, 1, 'one session/event watcher')
 assert.equal(listeners[0].name, 'session/event')
 console.log(`1 mount            OK  routes=${routes.length} watcher=${listeners[0].name}`)
@@ -162,6 +162,7 @@ console.log('\n--- immediate mode (DeepSeek provider drops empty user messages) 
 }
 
 console.log('\nall host flow checks passed')
+
 
 
 
