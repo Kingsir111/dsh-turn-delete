@@ -41,9 +41,9 @@ check('.gitignore', has('.gitignore'))
 
 const client = fs.readFileSync(path.join(root, 'lib/client.js'), 'utf8')
 const requires = [...client.matchAll(/require\('([^']+)'\)/g)].map(match => match[1])
-check(`client 的 require：${requires.join(', ') || '无'}`, requires.every(name => name === 'react' || name === 'react-dom/client'))
+check(`client 的 require：${requires.join(', ') || '无'}`, requires.every(name => name === 'react'))
 check('client 槽位 assistant-actions#turn-delete', client.includes("id: 'turn-delete'"))
-check('client 自建面板 root', client.includes('data-dsh-turn-delete-root'))
+check('client 用纯 DOM 建 UI', client.includes('data-dsh-turn-delete-ui'))
 check('client 走 __ModuleLoader__ 自注册', client.includes('window.__ModuleLoader__.load'))
 
 const host = fs.readFileSync(path.join(root, 'lib/index.js'), 'utf8')
