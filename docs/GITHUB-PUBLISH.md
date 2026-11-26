@@ -1,4 +1,4 @@
-# GitHub 发布清单
+﻿# GitHub 发布清单
 
 ## 一、要提交的文件（完整列表）
 
@@ -34,7 +34,10 @@ dsh-turn-delete/
 │  ├─ matrix.mjs             # 跨内核版本矩阵
 │  ├─ compat-gate.mjs        # 兼容闸门裁决
 │  ├─ proof-context.mjs      # 「文本真的从上下文消失」的证据脚本
-│  └─ package-check.mjs      # 包完整性自检：34 项断言（清单/导出/槽位/占位符）
+│  ├─ package-check.mjs      # 包完整性自检：34 项断言（清单/导出/槽位/占位符）
+│  ├─ load-check.mjs         # 用内核启动准入校验一条真实日志能否加载
+│  ├─ what-model-sees.mjs    # 删除前后：模型到底还能看到什么
+│  └─ dump-view.mjs          # 并排打印表面节点与派生消息
 └─ tools/                    # 手工救援工具（建议提交）
    ├─ repair-log.mjs         # 修「历史加载失败」的会话
    ├─ clone-session.mjs      # 换 id 克隆会话
@@ -182,3 +185,4 @@ Adds one entry for a session plugin.
 ### 另一条渠道：应用内插件市场
 
 DSH 桌面版「设置 → 插件市场（dsh-market）」右上角有 **申请收录插件 ↗**，那是 dsh-market 自己的收录入口，与 awesome-dsh-plugin 列表互不替代，可以两边都提。
+
