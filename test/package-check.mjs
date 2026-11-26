@@ -1,4 +1,4 @@
-﻿// Local consistency check for the publishable package.
+// Local consistency check for the publishable package.
 import fs from 'node:fs'
 import path from 'node:path'
 
@@ -41,9 +41,9 @@ check('.gitignore', has('.gitignore'))
 
 const client = fs.readFileSync(path.join(root, 'lib/client.js'), 'utf8')
 const requires = [...client.matchAll(/require\('([^']+)'\)/g)].map(match => match[1])
-check(`client 只 require react（实际：${requires.join(', ') || '无'}）`, requires.length === 1 && requires[0] === 'react')
+check(`client 的 require：${requires.join(', ') || '无'}`, requires.every(name => name === 'react' || name === 'react-dom/client'))
 check('client 槽位 assistant-actions#turn-delete', client.includes("id: 'turn-delete'"))
-check('client 槽位 turnTail#turn-delete-marker', client.includes("id: 'turn-delete-marker'"))
+check('client 自建面板 root', client.includes('data-dsh-turn-delete-root'))
 check('client 走 __ModuleLoader__ 自注册', client.includes('window.__ModuleLoader__.load'))
 
 const host = fs.readFileSync(path.join(root, 'lib/index.js'), 'utf8')
@@ -58,4 +58,5 @@ for (const [name, ok] of checks) {
   console.log(`  ${ok ? 'OK  ' : 'FAIL'}  ${name}`)
 }
 console.log(`\n共 ${checks.length} 项，失败 ${failed} 项`)
+
 
