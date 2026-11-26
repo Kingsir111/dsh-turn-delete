@@ -22,7 +22,7 @@ check('peerDependencies 4 条', Object.keys(pkg.peerDependencies ?? {}).length =
 check('不含 engines.dsh', pkg.engines?.dsh === undefined)
 const hostSource = fs.readFileSync(path.join(root, 'lib/index.js'), 'utf8')
 const buildMatch = hostSource.match(/export const BUILD = '([^']+)'/u)
-check(ersion 与 BUILD 一致（）, buildMatch !== null && buildMatch[1] === pkg.version)
+check(`version 与 BUILD 一致（${pkg.version}）`, buildMatch !== null && buildMatch[1] === pkg.version)
 check('repository 指向已发布仓库', String(pkg.repository?.url ?? '').includes('Kingsir111/dsh-turn-delete'))
 check('author 已填真实署名', String(pkg.author ?? '').includes('Kingsir') && !String(pkg.author ?? '').includes('YOUR_'))
 
