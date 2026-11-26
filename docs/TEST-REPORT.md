@@ -12,7 +12,7 @@ SessionFormatError: system/message does not match an open turn and step
 
 `dsh-session-format-v3-to-v4/README.md:240` 明确规定：`system/message`、`developer/message`、`assistant/attempt` 必须匹配一个**开启**的 turn 和 step。写入时内存里不校验，只有**下一次加载**才校验——于是删过一轮的会话直接打不开。
 
-- 受影响会话：`session-be3fff67-…`（本地一个测试工作区）。已用 `tools/repair-log.mjs` 摘掉那条墓碑行修好（原文件备份为 `session.v4.jsonl.zstd.bak-<时间戳>`），删除的那一轮回到上下文中。
+- 受影响会话：某条本地会话（id 已隐去）。已用 `tools/repair-log.mjs` 摘掉那条墓碑行修好（原文件备份为 `session.v4.jsonl.zstd.bak-<时间戳>`），删除的那一轮回到上下文中。
 - 全量扫描：本机 33 个会话日志，只有这 1 个受影响，其余干净。
 - 0.4.0 换了机制，从根上不会再出现这个问题（见第 2 节，`4 load admission` 就是这条回归断言）。
 

@@ -33,7 +33,8 @@ dsh-turn-delete/
 │  ├─ client-register.mjs    # 前端槽位注册契约
 │  ├─ matrix.mjs             # 跨内核版本矩阵
 │  ├─ compat-gate.mjs        # 兼容闸门裁决
-│  └─ proof-context.mjs      # 「文本真的从上下文消失」的证据脚本
+│  ├─ proof-context.mjs      # 「文本真的从上下文消失」的证据脚本
+│  └─ package-check.mjs      # 包完整性自检：34 项断言（清单/导出/槽位/占位符）
 └─ tools/                    # 手工救援工具（建议提交）
    ├─ repair-log.mjs         # 修「历史加载失败」的会话
    ├─ clone-session.mjs      # 换 id 克隆会话
@@ -48,9 +49,9 @@ dsh-turn-delete/
 
 `.gitignore` 已覆盖这些。提交前用 `git status` 自查一遍有没有多出来的日志文件。
 
-## 三、发布前必须改的占位符
+## 三、发布元数据（已完成）
 
-`package.json` 里三处 `YOUR_*`：
+`package.json` 与两个 README 里的占位符已替换为本仓库的真实值：
 
 ```json
 "author": "Kingsir111 <Kingsir111@users.noreply.github.com>",
@@ -59,7 +60,7 @@ dsh-turn-delete/
 "homepage": "https://github.com/Kingsir111/dsh-turn-delete#readme"
 ```
 
-README / README.en 里的 `Kingsir111` 两处也要替换。
+换机器/换账号复用时，把这三处与 README 里的 `github:Kingsir111/…` 一起改掉；改完跑 `node test/package-check.mjs .` 确认没有 `YOUR_` 残留。
 
 ## 四、仓库 About 文案
 
