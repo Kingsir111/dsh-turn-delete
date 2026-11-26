@@ -1,6 +1,6 @@
 {
   "name": "dsh-turn-delete",
-  "version": "0.8.0",
+  "version": "0.9.0",
   "type": "module",
   "description": "Delete one finished turn from a DeepSeek Harness session without deleting the session: the turn leaves the model context, the log stays intact",
   "license": "MIT",
