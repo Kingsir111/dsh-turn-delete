@@ -1,4 +1,4 @@
-// Local consistency check for the publishable package.
+﻿// Local consistency check for the publishable package.
 import fs from 'node:fs'
 import path from 'node:path'
 
@@ -20,7 +20,9 @@ check('exports ./icon', pkg.exports?.['./icon'] === './icon.svg')
 check('exports ./locale/*.json', pkg.exports?.['./locale/*.json'] === './locale/*.json')
 check('peerDependencies 4 条', Object.keys(pkg.peerDependencies ?? {}).length === 4)
 check('不含 engines.dsh', pkg.engines?.dsh === undefined)
-check('version 与 BUILD 一致', pkg.version === '0.4.2')
+const hostSource = fs.readFileSync(path.join(root, 'lib/index.js'), 'utf8')
+const buildMatch = hostSource.match(/export const BUILD = '([^']+)'/u)
+check(ersion 与 BUILD 一致（）, buildMatch !== null && buildMatch[1] === pkg.version)
 check('repository 指向已发布仓库', String(pkg.repository?.url ?? '').includes('Kingsir111/dsh-turn-delete'))
 check('author 已填真实署名', String(pkg.author ?? '').includes('Kingsir') && !String(pkg.author ?? '').includes('YOUR_'))
 
@@ -56,3 +58,4 @@ for (const [name, ok] of checks) {
   console.log(`  ${ok ? 'OK  ' : 'FAIL'}  ${name}`)
 }
 console.log(`\n共 ${checks.length} 项，失败 ${failed} 项`)
+
